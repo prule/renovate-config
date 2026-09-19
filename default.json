@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Shared Renovate baseline for prule projects. Language-agnostic policy only; stack-specific rules live in the :node and :java presets.",
+  "extends": ["config:recommended", "config:best-practices"],
+  "timezone": "UTC",
+  "schedule": ["* * * * 0,6"],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"]
+  },
+  "packageRules": [
+    {
+      "description": "Automerge digest bumps for devcontainer images and Dockerfile syntax. config:best-practices pins these by digest, which means base-image security rebuilds arrive as PRs instead of being picked up silently; an unreviewed queue of those is worse than the floating tag they replaced.",
+      "matchManagers": ["dockerfile", "devcontainer"],
+      "matchUpdateTypes": ["digest", "pinDigest"],
+      "automerge": true
+    },
+    {
+      "description": "Automerge minor/patch/digest GitHub Actions updates; majors still come up for review.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
+      "groupName": "github-actions",
+      "automerge": true
+    },
+    {
+      "description": "GitHub Actions majors are grouped but never automerged.",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "github-actions-major",
+      "automerge": false
+    }
+  ]
+}

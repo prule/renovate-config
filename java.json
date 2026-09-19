@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Shared Renovate config for prule Java/Gradle projects.",
+  "extends": ["github>prule/renovate-config"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "packageRules": [
+    {
+      "description": "Group the Spring ecosystem so its modules move together",
+      "groupName": "spring-boot",
+      "matchPackageNames": [
+        "org.springframework.boot:**",
+        "org.springframework.cloud:**"
+      ]
+    },
+    {
+      "description": "Group test dependencies and automerge minor/patch",
+      "groupName": "test-dependencies",
+      "matchPackageNames": [
+        "org.junit:**",
+        "org.junit.jupiter:**",
+        "org.junit.platform:**",
+        "org.assertj:**",
+        "org.testcontainers:**"
+      ],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "Group Gradle wrapper updates and automerge minor/patch",
+      "groupName": "gradle-wrapper",
+      "matchManagers": ["gradle-wrapper"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "Mockito and Byte Buddy track the JDK closely; hold them behind dashboard approval",
+      "matchPackageNames": ["org.mockito:**", "net.bytebuddy:**"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "A JDK major is a deliberate decision, not an automatic one",
+      "matchManagers": ["sdkmanrc"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    }
+  ]
+}
