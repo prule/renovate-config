@@ -10,8 +10,9 @@
   },
   "packageRules": [
     {
-      "description": "Automerge digest bumps for devcontainer images and Dockerfile syntax. config:best-practices pins these by digest, which means base-image security rebuilds arrive as PRs instead of being picked up silently; an unreviewed queue of those is worse than the floating tag they replaced.",
+      "description": "Automerge digest bumps for devcontainer images only. config:best-practices pins these by digest, which means base-image security rebuilds arrive as PRs instead of being picked up silently; an unreviewed queue of those is worse than the floating tag they replaced. Scoped to .devcontainer/ so application Dockerfiles and compose files are never automerged.",
       "matchManagers": ["dockerfile", "devcontainer"],
+      "matchFileNames": [".devcontainer/**", "**/.devcontainer/**"],
       "matchUpdateTypes": ["digest", "pinDigest"],
       "automerge": true
     },
