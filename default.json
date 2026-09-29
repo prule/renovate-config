@@ -1,12 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Shared Renovate baseline for prule projects. Language-agnostic policy only; stack-specific rules live in the :node and :java presets.",
-  "extends": ["config:recommended", "config:best-practices"],
+  "extends": ["config:recommended", "config:best-practices", "schedule:monthly"],
   "timezone": "UTC",
-  "schedule": ["* * * * 0,6"],
   "vulnerabilityAlerts": {
     "enabled": true,
-    "schedule": ["at any time"]
+    "schedule": ["at any time on the second day of the month"]
   },
   "packageRules": [
     {
